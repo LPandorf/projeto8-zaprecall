@@ -9,16 +9,19 @@ import quase from '../assets/icone_quase.png';
 
 export default function PerguntaIndividual(props) {
 
+    let x=0;
+
     const [estadoDaCarta, setestadoDaCarta] = useState(0);
     const [cor, setcor]= useState("black");
     const [linha, setlinha]= useState("none");
     const [contador, setcontador]= useState(0);
     const [icone, seticone]= useState(seta);
-    const [concluidos,setconcluidos]= useState(0);
+    //const [concluidos,setconcluidos]= useState(0);
 
     function mudarCor(color){
         setcontador(contador+1);
-        setconcluidos(contador+1);
+        //props.setconcluidos(contador);
+        x=x+1;
 
         if(color==="green"){
             //#2FBE34
@@ -58,13 +61,13 @@ export default function PerguntaIndividual(props) {
                 return (
                     <CartaTres>{props.item.R}
                         <Lado>
-                            <Vermelho onClick={()=>mudarCor("red") /setestadoDaCarta(0)}>
+                            <Vermelho onClick={()=>mudarCor("red") /setestadoDaCarta(0)/props.setconcluidos(1)}>
                                 Não Lembrei
                             </Vermelho>
-                            <Orange onClick={()=>mudarCor("orange") /setestadoDaCarta(0)}>
+                            <Orange onClick={()=>mudarCor("orange") /setestadoDaCarta(0)/props.setconcluidos(1)}>
                                 Quase não lembrei
                             </Orange>
-                            <Verde onClick={()=>mudarCor("green") /setestadoDaCarta(0)}>
+                            <Verde onClick={()=>mudarCor("green") /setestadoDaCarta(0)/props.setconcluidos(1)}>
                                 Zap!
                             </Verde>
                         </Lado>

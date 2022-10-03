@@ -1,10 +1,11 @@
 import PerguntaIndividual from './PerguntaIndividual';
+import { useState } from 'react';
 
 import styled from 'styled-components';
 
 export default function Pergunta() {
     
-    //const [concluidos,setconcluidos]= useState(0);
+    const [concluidos,setconcluidos]= useState(0);
 
     const DeckRecall = [
         { Q: "O que é JSX?", R: "Uma extensão de linguagem do JavaScript" },
@@ -13,16 +14,16 @@ export default function Pergunta() {
         { Q: "Usamos props para ", R: "passar diferentes informações para componentes" }
     ];
 
-    function recebeContador(props){
-        let concluidos=props.concluidos;
+    function recebeContador(){
+        setconcluidos(concluidos+1)
     }
 
     return (
         <Fundo>
             {DeckRecall.map((item, index) => {
-                return <PerguntaIndividual key={index} item={item} index={index} setconcluidos={setconcluidos}/>
+                return (<><PerguntaIndividual key={index} item={item} index={index} setconcluidos={()=>recebeContador()} /></>)
             })}
-            <Footer><h1 >{concluidos}/concluídos</h1></Footer>
+            <Footer><h1 >{concluidos}/4 concluídos</h1></Footer>
         </Fundo>
     )
 
