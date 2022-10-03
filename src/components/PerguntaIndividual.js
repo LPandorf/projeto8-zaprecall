@@ -2,15 +2,50 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import seta from '../assets/seta_play.png';
 import virar from '../assets/seta_virar.png';
+import erro from '../assets/icone_erro.png';
+import acerto from '../assets/icone_certo.png';
+import quase from '../assets/icone_quase.png';
 
 
 export default function PerguntaIndividual(props) {
 
     const [estadoDaCarta, setestadoDaCarta] = useState(0);
+    const [cor, setcor]= useState("black");
+    const [linha, setlinha]= useState("none");
+    const [contador, setcontador]= useState(0);
+    const [icone, seticone]= useState(seta);
+    const [concluidos,setconcluidos]= useState(0);
+
+    function mudarCor(color){
+        setcontador(contador+1);
+        setconcluidos(contador+1);
+
+        if(color==="green"){
+            //#2FBE34
+            setcor("green");
+            setlinha("line-through");
+            seticone(acerto);
+        }else{
+            if(color==="red"){
+                //#FF3030
+                setcor("red");
+                setlinha("line-through");
+                seticone(erro);
+            }else {
+                if(color==="orange"){
+                    //#FF922E
+                    setcor("orange");
+                    setlinha("line-through");
+                    seticone(quase);
+                }
+            }
+        }
+    }
+    
 
     if (estadoDaCarta === 0) {
         //fechado
-        return <Carta >pergunta {props.index + 1}<img src={seta} onClick={() => setestadoDaCarta(1)} /></Carta>
+        return <Carta ><Pergunta style={{color: `${cor}`,textDecoration:`${linha}`}}>Pergunta {props.index + 1}</Pergunta><img src={icone} onClick={() => setestadoDaCarta(1)} /></Carta>
 
     } else {
         if (estadoDaCarta === 1) {
@@ -23,13 +58,13 @@ export default function PerguntaIndividual(props) {
                 return (
                     <CartaTres>{props.item.R}
                         <Lado>
-                            <Vermelho>
+                            <Vermelho onClick={()=>mudarCor("red") /setestadoDaCarta(0)}>
                                 Não Lembrei
                             </Vermelho>
-                            <Amarelo >
+                            <Orange onClick={()=>mudarCor("orange") /setestadoDaCarta(0)}>
                                 Quase não lembrei
-                            </Amarelo>
-                            <Verde >
+                            </Orange>
+                            <Verde onClick={()=>mudarCor("green") /setestadoDaCarta(0)}>
                                 Zap!
                             </Verde>
                         </Lado>
@@ -39,6 +74,10 @@ export default function PerguntaIndividual(props) {
         }
     }
 }
+
+const Pergunta = styled.div`
+    color: cor;
+`
 
 const Carta = styled.div`
     width: 300px;
@@ -79,6 +118,7 @@ const Verde = styled.div`
     height: 40px;
     margin-left: 25px;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     color: white;
@@ -88,12 +128,13 @@ const Verde = styled.div`
     line-height: 14px;
 `
 
-const Amarelo = styled.div`
+const Orange = styled.div`
     background-color: #FF922E;
     width: 70px;
     height: 40px;
     margin-left: 25px;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     color: white;
@@ -109,6 +150,7 @@ const Vermelho = styled.div`
     height: 40px;
     margin-left: 20px;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     color: white;
